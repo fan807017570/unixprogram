@@ -26,6 +26,7 @@ int main(int argc, char **argv)
         if ((pid = fork()) == 0)
         {
             //如果是子进程，就执行请求处理函数
+            printf("this process id is :%d\n",pid);
             close(sfd);
             str_echo(confd);
             exit(0);
