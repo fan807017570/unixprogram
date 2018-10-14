@@ -4,5 +4,7 @@
 #include<sys/types.h>
 #include<string.h>
 #include<errno.h>
+#include<stdlib.h>
 #include"socket_io.h"
-void str_cli(int stdin,int fd);
+#define MAX_LEN 2049
+void str_cli(FILE * stdin,int fd);

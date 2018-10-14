@@ -10,7 +10,8 @@ int main(int argc,char ** argv){
         printf("sorry ,please input server prot \n");
         return -1;
     }
-    int port =itoa(sport);
+    int port;
+    sprintf(argv[2],"%d",port);
     int cfd;
     socklen_t len;
     struct sockaddr_in addr;
@@ -21,7 +22,7 @@ int main(int argc,char ** argv){
     cfd=socket(AF_INET,SOCK_STREAM,0);
     len =sizeof(addr);
     int ret=connect(cfd,(struct sockaddr *)&addr,&len);
-    if(ret<0){
+    if(ret<0){ 
         printf("connect server error %d \n",errno);
         return -1;
     }
@@ -29,7 +30,10 @@ int main(int argc,char ** argv){
     return 0;
 }
 
-void str_cli(int stdin,int fd){
+void str_cli(FILE * fp,int fd){
+    char sendline[MAX_LEN],recvline[MAX_LEN];
+    while(fgets(sendline,MAX_LEN,fp)!=NULL){
+        writen(fd,sendline,strlen(sendline));
 
-
+    }
 }
