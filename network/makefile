@@ -19,4 +19,4 @@ $(OBJS):%o:%c
 # client:
 # 	$(CC) -o client $(OBJS2)
 clean: 
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) $(TARGET)

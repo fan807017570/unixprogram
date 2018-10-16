@@ -20,14 +20,14 @@ int main(int argc,char ** argv){
     struct sockaddr_in addr;
     bzero(&addr,sizeof(struct sockaddr_in));
     addr.sin_family=AF_INET;
-    addr.sin_port=htons(port);
-    addr.sin_addr.s_addr = htonl(ip);
+    addr.sin_port=htons(8097);
+    addr.sin_addr.s_addr = inet_addr(ip);
     // printf("ip :%s \n",addr.sin_addr.s_addr);
     cfd=socket(AF_INET,SOCK_STREAM,0);
     len =sizeof(addr);
     int ret=connect(cfd,(struct sockaddr *)&addr,len);
     if(ret<0){ 
-        printf("connect server error: %d \n",errno);
+        printf("connect server error: %s \n",strerror(errno));
         return -1;
     }
     str_cli(stdin,cfd);
