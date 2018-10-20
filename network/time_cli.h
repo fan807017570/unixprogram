@@ -10,5 +10,7 @@
 #include<unistd.h>
 #include"socket_io.h"
 #include<errno.h>
+#include "sum.h"
 #define MAX_LEN 2049
 void str_cli(FILE * stdin,int fd);
+int add_rest(FILE *fp,int fd);

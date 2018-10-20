@@ -4,8 +4,10 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 #include<errno.h>
+#include "socket_io.h"
+#include "sum.h"
 #define SERVER_PORT 8097
 #define MAX_LEN 2049
 void str_echo(int fd);
-ssize_t writen(int fd, const void *vptr, size_t n);
-ssize_t readn(int fd, const void *vptr, size_t n);
+void add_echo(int fd);
+// void sig_chld(int signo);

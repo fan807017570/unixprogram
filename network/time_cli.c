@@ -36,7 +36,7 @@ int main(int argc,char ** argv){
 
 void str_cli(FILE * fp,int fd){
     char exit[] ="exit\n";
-    printf("starting read from file %s ");
+    printf("starting read from file\n");
     char sendline[MAX_LEN],recvline[MAX_LEN];
     while(strlen(fgets(sendline,MAX_LEN,fp))>0){
         printf("send msg is :%s \n",sendline);
@@ -47,7 +47,28 @@ void str_cli(FILE * fp,int fd){
         if(readline(fd,recvline,MAX_LEN)==0){
             printf("system terminated permaturely!");
         }
-        fputs(recvline,stdout);
+        printf("recv line is :%s\n",recvline);
+        // fputs(recvline,stdout);
         }
     }
+}
+
+int add_rest(FILE *fp,int fd){
+    char sendline[MAX_LEN];
+    struct args args;
+    struct sum rest;
+    while(fgets(sendline,MAX_LEN,fp)!=NULL){
+        if(sscanf(sendline,"%ld%ld",args.arg1,args.arg2)!=2){
+            printf("read arguments error\n");
+            return -1;
+        }
+        writen(fd,&args,sizeof(args));
+        if(readn(fd,&rest,sizeof(rest))==0){
+            printf("read result from server error%s\n",strerror(errno));
+            return -1;
+        }
+        printf("result is :%ld\n",rest.result);
+    }
+
+
 }

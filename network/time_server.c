@@ -49,4 +49,15 @@ void str_echo(int fd)
         }
     }
 }
+void add_echo(int fd){
+    ssize_t n;
+    struct args args;
+    struct sum rest;
+    while((n=readn(fd,&args,sizeof(args)))>0){
+        rest.result=args.arg1+args.arg2;
+        writen(fd,&rest,sizeof(rest));
+    }
+}
+
+
 
