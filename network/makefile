@@ -1,5 +1,5 @@
 CC= gcc 
-CFLAGS=-lpthread -g
+CFLAGS=-lpthread
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
 # OBJS1=socket_io.o	time_server.o 
 # OBJS2=socket_io.o	time_cli.o
@@ -23,4 +23,4 @@ $(OBJS):%o:%c
 # client:
 # 	$(CC) -o client $(OBJS2)
 clean: 
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) $(TARGET)
