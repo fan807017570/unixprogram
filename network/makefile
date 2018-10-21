@@ -1,13 +1,16 @@
 CC= gcc 
 CFLAGS=-lpthread
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
-TARGET=time_server time_cli
+TARGET=time_server time_cli sserver
 all:$(TARGET)
 	 @echo  $(filter-out time_cli.o,$(OBJS))
 time_server: $(filter-out time_cli.o,$(OBJS))
 	$(CC) $(CFLAGS) -o $@ $^
 time_cli:	$(filter-out time_server.o ,$(OBJS))
 	$(CC) $(CFLAGS) -o $@ $^
+sserver:%o:%c
+	$(CC) $(CFLAGS) $< -o $@ 
+
 # all:$(TARGET)	
 $(OBJS):%o:%c
 	$(CC) -c $(CFLAGS) $< -o $@  # $< the first dependency file:socket_io.o:socket_io.c socket_io.h
