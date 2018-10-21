@@ -1,10 +1,6 @@
 CC= gcc 
 CFLAGS=-lpthread
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
-# OBJS1=socket_io.o	time_server.o 
-# OBJS2=socket_io.o	time_cli.o
-# @echo $(OBJS)
-# @echo "end"
 TARGET=time_server time_cli
 all:$(TARGET)
 	 @echo  $(filter-out time_cli.o,$(OBJS))

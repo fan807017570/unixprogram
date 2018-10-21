@@ -13,20 +13,21 @@ int main(int argc,char ** argv){
         return -1;
     }
     int port;
-    sprintf(sport,"%d",port);
+    port=atoi(sport);
+    // sprintf(sport,"%d",port);
     int cfd;
     socklen_t len;
     struct sockaddr_in addr;
     bzero(&addr,sizeof(struct sockaddr_in));
     addr.sin_family=AF_INET;
-    addr.sin_port=htons(port);
-    addr.sin_addr.s_addr = htonl(ip);
-    printf("ip :%s \n",addr.sin_addr.s_addr);
+    addr.sin_port=htons(8097);
+    addr.sin_addr.s_addr = inet_addr(ip);
+    // printf("ip :%s \n",addr.sin_addr.s_addr);
     cfd=socket(AF_INET,SOCK_STREAM,0);
     len =sizeof(addr);
     int ret=connect(cfd,(struct sockaddr *)&addr,len);
     if(ret<0){ 
-        printf("connect server error: %d \n",errno);
+        printf("connect server error: %s \n",strerror(errno));
         return -1;
     }
     str_cli(stdin,cfd);
@@ -34,14 +35,19 @@ int main(int argc,char ** argv){
 }
 
 void str_cli(FILE * fp,int fd){
+    char exit[] ="exit\n";
     printf("starting read from file %s ");
     char sendline[MAX_LEN],recvline[MAX_LEN];
-    while(fgets(sendline,MAX_LEN,fp)!=NULL){
+    while(strlen(fgets(sendline,MAX_LEN,fp))>0){
         printf("send msg is :%s \n",sendline);
+        if(strcmp(exit,sendline)==0){
+            printf("program exit\n");
+        }else{
         writen(fd,sendline,strlen(sendline));
-        if(readline(fd,sendline,MAX_LEN)==0){
+        if(readline(fd,recvline,MAX_LEN)==0){
             printf("system terminated permaturely!");
         }
         fputs(recvline,stdout);
+        }
     }
 }
