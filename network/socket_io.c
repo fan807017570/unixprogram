@@ -37,9 +37,7 @@ ssize_t readn(int fd, const void *vptr, size_t n)
             if (nread < 0 &&errno == EINTR)
             {
                 nread = 0;
-            }
-            else
-            {
+            }else {
                 return -1;
             }
         }

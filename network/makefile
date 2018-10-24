@@ -3,13 +3,13 @@ CFLAGS=-lpthread
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
 TARGET=time_server time_cli sserver
 all:$(TARGET)
-	 @echo  $(filter-out time_cli.o,$(OBJS))
-time_server: $(filter-out time_cli.o,$(OBJS))
+	 @echo  $(filter-out time_cli.o sserver.o, $(OBJS))
+time_server: $(filter-out time_cli.o sserver.o, $(OBJS))
 	$(CC) $(CFLAGS) -o $@ $^
-time_cli:	$(filter-out time_server.o ,$(OBJS))
+time_cli:$(filter-out time_server.o sserver.o,$(OBJS))
 	$(CC) $(CFLAGS) -o $@ $^
-sserver:%o:%c
-	$(CC) $(CFLAGS) $< -o $@ 
+sserver:$(filter-out time_server.o time_cli.o,$(OBJS))
+	$(CC) $(CFLAGS) -o $@ $^
 
 # all:$(TARGET)	
 $(OBJS):%o:%c

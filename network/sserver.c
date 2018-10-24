@@ -8,10 +8,10 @@ int main(int argc,char ** argv){
     int ret;
     socklen_t len;
     fd_set allset,rset;
-    if(argc!=2){
-        printf("input arguments error\n");
-        return -1;
-    }
+    // if(argc!=2){
+    //     printf("input arguments error\n");
+    //     return -1;
+    // }
     struct sockaddr_in saddr,cliaddr;
     bzero(&saddr,sizeof(saddr));
     saddr.sin_family=AF_INET;
@@ -81,5 +81,6 @@ int main(int argc,char ** argv){
             }
         }
     }
+    close(sfd);
     return 0;
 }
