@@ -19,6 +19,11 @@ int main(int argc,char ** argv){
     saddr.sin_addr.s_addr=inet_addr("127.0.0.1");
     saddr.sin_port=htons(SERVER_PORT);
     sfd=socket(AF_INET,SOCK_STREAM,0);
+    int isReuse=1,err;
+    err=setsockopt(sfd,SOL_SOCKET,SO_REUSEADDR,(void *)&isReuse,sizeof(int));
+    if(err!=0){
+        printf("set socker addr reuse error\n");
+    }
     ret=bind(sfd,(struct sockaddr*)&saddr,sizeof(saddr));
     if(ret!=0){
         printf("bind socket address error:%s\n",strerror(errno));
@@ -39,7 +44,7 @@ int main(int argc,char ** argv){
     while(1){
         rset=allset;
         nready=select(maxfd+1,&rset,NULL,NULL,NULL);
-        if(FD_ISSET(sfd,&allset)){
+        if(FD_ISSET(sfd,&rset)){
             len=sizeof(cliaddr);
             connfd=accept(sfd,(struct sockaddr *)&cliaddr,&len);
             for(i=0;i<FD_SETSIZE;i++){
@@ -62,22 +67,24 @@ int main(int argc,char ** argv){
                 continue;
             }
        }
-        for(i=0;i<maxi;i++){
+        for(i=0;i<=maxi;i++){
             if((sockfd=client[i])<0){
                 continue;
             }
             if(FD_ISSET(client[i],&rset)){
+                memset(buf,0,sizeof(buf));
                 if((rn=read(sockfd,buf,MAX_LEN))==0){
                     close(sockfd);
                     FD_CLR(sockfd,&allset);
                     client[i]=-1;
                 }else{
+                    buf[rn]='\n';
                     printf("read from client :%s\n",buf);
                     write(sockfd,buf,rn);
                 }
-                if(--nready<=0){
-                    break;
-                }
+                // if(--nready<=0){
+                //     break;
+                // }
             }
         }
     }

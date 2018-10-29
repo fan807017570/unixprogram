@@ -20,7 +20,7 @@ int main(int argc,char ** argv){
     struct sockaddr_in addr;
     bzero(&addr,sizeof(struct sockaddr_in));
     addr.sin_family=AF_INET;
-    addr.sin_port=htons(8097);
+    addr.sin_port=htons(8089);
     addr.sin_addr.s_addr = inet_addr(ip);
     // printf("ip :%s \n",addr.sin_addr.s_addr);
     cfd=socket(AF_INET,SOCK_STREAM,0);
@@ -43,11 +43,11 @@ void str_cli(FILE * fp,int fd){
         if(strcmp(exit,sendline)==0){
             printf("program exit\n");
         }else{
-        writen(fd,sendline,strlen(sendline));
-        if(readline(fd,recvline,MAX_LEN)==0){
-            printf("system terminated permaturely!");
-        }
-        printf("recv line is :%s\n",recvline);
+            writen(fd,sendline,strlen(sendline));
+            if(readline(fd,recvline,MAX_LEN)==0){
+                printf("system terminated permaturely!");
+            }
+            printf("recv line is :%s\n",recvline);
         // fputs(recvline,stdout);
         }
     }

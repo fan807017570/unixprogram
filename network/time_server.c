@@ -39,11 +39,11 @@ void str_echo(int fd)
 {
     ssize_t  n;
     char buf[MAX_LEN];
-    while((n=read(fd,buf,MAX_LEN))>0){
+    if((n=read(fd,buf,MAX_LEN))>0){
         printf("read content is :%s\n",buf);
         writen(fd,buf,n);
         if(n<0 && errno==EINTR){
-            continue;
+            return;
         }else if(n<0){
             printf("str echo :read error %d",errno);
         }

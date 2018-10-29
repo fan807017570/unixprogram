@@ -1,5 +1,5 @@
 CC= gcc 
-CFLAGS=-lpthread
+CFLAGS= -g -lpthread
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
 TARGET=time_server time_cli sserver
 all:$(TARGET)
